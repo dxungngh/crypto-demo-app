@@ -10,7 +10,7 @@ import { useTheme } from '@/theme';
 
 import { AssetByVariant } from '@/components/atoms';
 import { SafeScreen } from '@/components/templates';
-import VCBButton from '@/components/foundations/VCBButton';
+import VCBButton from '@/components/foundations/CustomButton';
 
 function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
   const { fonts, gutters, layout } = useTheme();
@@ -34,20 +34,6 @@ function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
 
   return (
     <SafeScreen>
-      <View
-        style={[
-          layout.flex_1,
-          layout.col,
-          layout.itemsCenter,
-          layout.justifyCenter,
-        ]}
-      >
-        <VCBButton buttonSize='large' languageKey='Clear the data' />
-        <VCBButton buttonSize='large' languageKey='Insert the data' />
-        <VCBButton buttonSize='large' languageKey='Currency List A - Crypto' />
-        <VCBButton buttonSize='large' languageKey='Currency List B - Crypto' />
-        <VCBButton buttonSize='large' languageKey='Currency List A + B' />
-      </View>
     </SafeScreen>
   );
 }

@@ -8,10 +8,10 @@ import {
     Pressable,
     TextProps
 } from 'react-native';
-import { VCBTextHeadingSmall, VCBTextLabelLarge, VCBTextLabelMedium } from './VCBText';
-import VCBColors from './VCBColors';
+import { CustomTextHeadingSmall, CustomTextLabelLarge, CustomTextLabelMedium } from './CustomText';
+import CustomColors from './CustomColors';
 
-export type VCBButtonProps = {
+export type CustomButtonProps = {
     /**
      * children button
      * children is skipped when languageKey is not null
@@ -57,7 +57,7 @@ export type VCBButtonProps = {
     containerStyle?: StyleProp<ViewStyle>;
 };
 
-export interface VCBTextButtonProps extends TextProps {
+export interface CustomTextButtonProps extends TextProps {
     /**
      * Key from LanguageOptions
      */
@@ -69,7 +69,7 @@ export interface VCBTextButtonProps extends TextProps {
     buttonSize: String
 }
 
-export default function VCBButton({
+export default function CustomButton({
     children,
     onPress,
     disabled,
@@ -80,7 +80,7 @@ export default function VCBButton({
     iconChildren,
     containerStyle,
     languageKey
-}: VCBButtonProps) {
+}: CustomButtonProps) {
     return (
         <Pressable
             accessibilityRole="button"
@@ -160,27 +160,27 @@ function ButtonBackground({
     }
 }
 
-function TextButton({ children, buttonSize, languageKey, ...rest }: React.PropsWithChildren<VCBTextButtonProps>) {
+function TextButton({ children, buttonSize, languageKey, ...rest }: React.PropsWithChildren<CustomTextButtonProps>) {
 
     switch (buttonSize) {
         case 'medium':
             return (
-                <VCBTextLabelLarge languageKey={languageKey} {...rest} >
+                <CustomTextLabelLarge languageKey={languageKey} {...rest} >
                     {children}
-                </VCBTextLabelLarge>
+                </CustomTextLabelLarge>
             )
         case 'small':
             return (
-                <VCBTextLabelMedium languageKey={languageKey} {...rest}>
+                <CustomTextLabelMedium languageKey={languageKey} {...rest}>
                     {children}
-                </VCBTextLabelMedium>
+                </CustomTextLabelMedium>
             )
         default:
             // Default button size = large
             return (
-                <VCBTextHeadingSmall languageKey={languageKey} {...rest}>
+                <CustomTextHeadingSmall languageKey={languageKey} {...rest}>
                     {children}
-                </VCBTextHeadingSmall>
+                </CustomTextHeadingSmall>
             )
     }
 }
@@ -189,14 +189,14 @@ function textColor(type?: String, isDisable?: boolean) {
     switch (type) {
         case 'gradient':
         case 'solid':
-            return VCBColors.white;
+            return CustomColors.white;
         case 'secondary':
         case 'link':
-            return !isDisable ? VCBColors.green_90 : VCBColors.gray_50;
+            return !isDisable ? CustomColors.green_90 : CustomColors.gray_50;
         case 'tertiary':
-            return !isDisable ? VCBColors.gray_100 : VCBColors.gray_50;
+            return !isDisable ? CustomColors.gray_100 : CustomColors.gray_50;
         default:
-            return VCBColors.green_90;
+            return CustomColors.green_90;
     }
 }
 
@@ -210,7 +210,7 @@ const Styles = StyleSheet.create({
     },
     container_solid_enable: {
         borderWidth: 0,
-        backgroundColor: VCBColors.green_90
+        backgroundColor: CustomColors.green_90
     },
     container_solid_enable_press: {
         borderWidth: 0,
@@ -218,39 +218,39 @@ const Styles = StyleSheet.create({
     },
     container_solid_disable: {
         borderWidth: 0,
-        backgroundColor: VCBColors.gray_50,
+        backgroundColor: CustomColors.gray_50,
     },
     container_secondary_enable: {
         borderWidth: 1,
-        borderColor: VCBColors.green_90,
-        backgroundColor: VCBColors.white
+        borderColor: CustomColors.green_90,
+        backgroundColor: CustomColors.white
     },
     container_secondary_enable_press: {
         borderWidth: 1,
-        borderColor: VCBColors.green_90,
-        backgroundColor: VCBColors.green_10
+        borderColor: CustomColors.green_90,
+        backgroundColor: CustomColors.green_10
     },
     container_secondary_disable: {
         borderWidth: 1,
-        borderColor: VCBColors.gray_40,
-        backgroundColor: VCBColors.white,
+        borderColor: CustomColors.gray_40,
+        backgroundColor: CustomColors.white,
     },
     container_tertiary_enable: {
         borderWidth: 1,
-        borderColor: VCBColors.gray_40,
-        backgroundColor: VCBColors.white
+        borderColor: CustomColors.gray_40,
+        backgroundColor: CustomColors.white
     },
     container_tertiary_enable_pressed: {
         borderWidth: 1,
-        borderColor: VCBColors.gray_40,
-        backgroundColor: VCBColors.gray_20
+        borderColor: CustomColors.gray_40,
+        backgroundColor: CustomColors.gray_20
     },
     container_tertiary_disable: {
         borderWidth: 1,
-        borderColor: VCBColors.gray_40,
-        backgroundColor: VCBColors.white,
+        borderColor: CustomColors.gray_40,
+        backgroundColor: CustomColors.white,
     },
     container_link_pressed: {
-        backgroundColor: VCBColors.green_10
+        backgroundColor: CustomColors.green_10
     },
 });
