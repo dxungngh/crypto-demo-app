@@ -10,6 +10,7 @@ import { useTheme } from '@/theme';
 
 import { AssetByVariant } from '@/components/atoms';
 import { SafeScreen } from '@/components/templates';
+import VCBButton from '@/components/foundations/VCBButton';
 
 function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
   const { fonts, gutters, layout } = useTheme();
@@ -26,7 +27,7 @@ function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
     if (isSuccess) {
       navigation.reset({
         index: 0,
-        routes: [{ name: Paths.Example }],
+        routes: [{ name: Paths.ButtonList }],
       });
     }
   }, [isSuccess, navigation]);
@@ -41,17 +42,11 @@ function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
           layout.justifyCenter,
         ]}
       >
-        <AssetByVariant
-          path="tom"
-          resizeMode="contain"
-          style={{ height: 300, width: 300 }}
-        />
-        {isFetching ? (
-          <ActivityIndicator size="large" style={[gutters.marginVertical_24]} />
-        ) : undefined}
-        {isError ? (
-          <Text style={[fonts.size_16, fonts.red500]}>{t('common_error')}</Text>
-        ) : undefined}
+        <VCBButton buttonSize='large' languageKey='Clear the data' />
+        <VCBButton buttonSize='large' languageKey='Insert the data' />
+        <VCBButton buttonSize='large' languageKey='Currency List A - Crypto' />
+        <VCBButton buttonSize='large' languageKey='Currency List B - Crypto' />
+        <VCBButton buttonSize='large' languageKey='Currency List A + B' />
       </View>
     </SafeScreen>
   );
