@@ -19,11 +19,11 @@ export const useCurrencyInfo = () => {
   /**
    * Fetch currencies matching a search query.
    */
-  const useSearch = (query: string) =>
+  const searchCurrencyList = (inputText: string, type: CurrencyType) =>
     useQuery<CurrencyInfo[]>({
-      queryKey: [...currencyListQueryKey, 'search', query],
-      queryFn: () => Promise.resolve(CurrencyInfoService.search(query)),
-      enabled: query.length > 0,
+      queryKey: [...currencyListQueryKey, 'search', type, inputText],
+      queryFn: () => Promise.resolve(CurrencyInfoService.search(inputText, type)),
+      enabled: inputText.length > 0,
     });
 
   /**
@@ -65,7 +65,7 @@ export const useCurrencyInfo = () => {
 
   return {
     fetchCurrencyList,
-    useSearch,
+    searchCurrencyList,
 
     saveAllData,
     saveStatus: saveMutation.status,

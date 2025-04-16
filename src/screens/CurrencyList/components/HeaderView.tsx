@@ -6,12 +6,14 @@ import CustomTextInput from '@/components/foundations/CustomTextInput';
 export interface HeaderViewProps {
     placeholder?: string;
     onBackPress?: () => void;
+    onTextChanged: (text: string) => void;
 }
 
 function HeaderView(props: HeaderViewProps) {
     const {
         placeholder,
-        onBackPress
+        onBackPress,
+        onTextChanged
     } = props;
     const { layout } = useTheme();
 
@@ -42,6 +44,7 @@ function HeaderView(props: HeaderViewProps) {
             <CustomTextInput
                 containerStyle={{ width: '90%' }}
                 placeholder={placeholder}
+                onChangeText={(input) => { onTextChanged(input) }}
             />
         </View>
     );

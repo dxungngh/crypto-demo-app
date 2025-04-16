@@ -65,8 +65,8 @@ export const CurrencyInfoService = {
    * - OR name contains ' query' (space + query)
    * - OR symbol starts with query
    */
-  search(query: string): CurrencyInfo[] {
-    const all = CurrencyInfoService.getAll();
+  search(query: string, type: CurrencyType): CurrencyInfo[] {
+    const all = CurrencyInfoService.getByType(type);
     const lowerQuery = query.toLowerCase();
 
     return all.filter((item) => {

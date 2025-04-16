@@ -14,7 +14,8 @@ const NoDataView = () => {
                 layout.col,
                 layout.itemsCenter,
                 layout.justifyStart,
-
+                layout.fullWidth,
+                styles.bodyContainer
             ]}
         >
             <IconByVariant
@@ -32,7 +33,7 @@ const NoDataView = () => {
 
 const styles = StyleSheet.create({
     bodyContainer: {
-        paddingBottom: 24
+        paddingTop: 48
     },
     text: {
         textAlign: 'center',
