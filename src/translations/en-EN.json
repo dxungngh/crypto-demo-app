@@ -5,10 +5,8 @@
       "initials": "RNB"
     },
     "common_error": "Oops! Something went wrong.",
-    "startup": {
-      "welcome": "Welcome to the Demo app of Crypto.com"
-    },
     "screen_button_list": {
+      "language": "中国人",
       "clear_data": "Clear the data",
       "insert_data": "Insert the data",
       "list_a": "Currency List A - Crypto",

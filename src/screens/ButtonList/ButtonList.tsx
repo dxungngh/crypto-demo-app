@@ -6,6 +6,8 @@ import CustomAlert from '@/components/foundations/CustomAlert';
 import { useButtonList } from '@/hooks/buttonList/useButtonList';
 import { Paths } from '@/navigation/paths';
 import { RootScreenProps } from '@/navigation/types';
+import { useI18n } from '@/hooks';
+import { cryptoList, fiatList } from '@/assets/data';
 
 function ButtonList({ navigation }: RootScreenProps<Paths.ButtonList>) {
   const { layout } = useTheme();
@@ -16,126 +18,16 @@ function ButtonList({ navigation }: RootScreenProps<Paths.ButtonList>) {
     alertContent,
     closeAlert,
     clearData,
-    saveAllData
-  } = useButtonList();
+    saveAllData,
+    handleNavigateToCryptoList,
+    handleNavigateToFiatList
+  } = useButtonList(navigation);
 
-  const listA = [
-    {
-      "id": "BTC",
-      "name": "Bitcoin",
-      "symbol": "BTC"
-    },
-    {
-      "id": "ETH",
-      "name": "Ethereum",
-      "symbol": "ETH"
-    },
-    {
-      "id": "XRP",
-      "name": "XRP",
-      "symbol": "XRP"
-    },
-    {
-      "id": "BCH",
-      "name": "Bitcoin Cash",
-      "symbol": "BCH"
-    },
-    {
-      "id": "LTC",
-      "name": "Litecoin",
-      "symbol": "LTC"
-    },
-    {
-      "id": "EOS",
-      "name": "EOS",
-      "symbol": "EOS"
-    },
-    {
-      "id": "BNB",
-      "name": "Binance Coin",
-      "symbol": "BNB"
-    },
-    {
-      "id": "LINK",
-      "name": "Chainlink",
-      "symbol": "LINK"
-    },
-    {
-      "id": "NEO",
-      "name": "NEO",
-      "symbol": "NEO"
-    },
-    {
-      "id": "ETC",
-      "name": "Ethereum Classic",
-      "symbol": "ETC"
-    },
-    {
-      "id": "ONT",
-      "name": "Ontology",
-      "symbol": "ONT"
-    },
-    {
-      "id": "CRO",
-      "name": "Crypto.com Chain",
-      "symbol": "CRO"
-    },
-    {
-      "id": "CUC",
-      "name": "Cucumber",
-      "symbol": "CUC"
-    },
-    {
-      "id": "USDC",
-      "name": "USD Coin",
-      "symbol": "USDC"
-    }
-  ];
-
-  const listB = [
-    {
-      "id": "SGD",
-      "name": "Singapore Dollar",
-      "symbol": "$",
-      "code": "SGD"
-    }, {
-      "id": "EUR",
-      "name": "Euro",
-      "symbol": "€",
-      "code": "EUR"
-    }, {
-      "id": "GBP",
-      "name": "British Pound",
-      "symbol": "£",
-      "code": "GBP"
-    }, {
-      "id": "HKD",
-      "name": "Hong Kong Dollar",
-      "symbol": "$",
-      "code": "HKD"
-    }, {
-      "id": "JPY",
-      "name": "Japanese Yen",
-      "symbol": "¥",
-      "code": "JPY"
-    }, {
-      "id": "AUD",
-      "name": "Australian Dollar",
-      "symbol": "$",
-      "code": "AUD"
-    }, {
-      "id": "USD",
-      "name": "United States Dollar",
-      "symbol": "$",
-      "code": "USD"
-    }
-  ];
+  const { toggleLanguage } = useI18n();
 
   // Handlers
   const handleClear = () => clearData();
-  const handleInsert = () => saveAllData(listA, listB);
-  const handleSwitchToCrypto = () => navigation.navigate(Paths.CurrencyList, { isCurrencyList: true, isFiatList: false });
-  const handleSwitchToFiat = () => navigation.navigate(Paths.CurrencyList, { isCurrencyList: false, isFiatList: true });
+  const handleInsert = () => saveAllData(cryptoList, fiatList);
   const handleShowAll = () => console.log('Show all A + B');
 
   return (
@@ -145,51 +37,68 @@ function ButtonList({ navigation }: RootScreenProps<Paths.ButtonList>) {
           layout.flex_1,
           layout.col,
           layout.itemsCenter,
-          layout.justifyCenter,
+          layout.justifyStart,
         ]}
       >
-        <CustomButton
-          buttonSize="large"
-          buttonType="solid"
-          languageKey={'screen_button_list.clear_data'}
-          onPress={handleClear}
-          containerStyle={styles.button}
-        />
-        <CustomButton
-          buttonSize="large"
-          buttonType="solid"
-          languageKey={"screen_button_list.insert_data"}
-          onPress={handleInsert}
-          containerStyle={styles.button}
-        />
-        <CustomButton
-          buttonSize="large"
-          buttonType="solid"
-          languageKey="screen_button_list.list_a"
-          onPress={handleSwitchToCrypto}
-          containerStyle={styles.button}
-        />
-        <CustomButton
-          buttonSize="large"
-          buttonType="solid"
-          languageKey="screen_button_list.list_b"
-          onPress={handleSwitchToFiat}
-          containerStyle={styles.button}
-        />
-        <CustomButton
-          buttonSize="large"
-          buttonType="solid"
-          languageKey="screen_button_list.list_all"
-          onPress={handleShowAll}
-          containerStyle={styles.button}
+        <View style={[layout.row, layout.justifyEnd, styles.languageButton]}>
+          <CustomButton
+            buttonSize="small"
+            buttonType="secondary"
+            languageKey="screen_button_list.language"
+            onPress={toggleLanguage}
+            containerStyle={{ width: 140 }}
+          />
+        </View>
+        <View
+          style={[
+            layout.col,
+            layout.itemsCenter,
+            layout.justifyCenter,
+          ]}
+        >
+          <CustomButton
+            buttonSize="large"
+            buttonType="solid"
+            languageKey="screen_button_list.clear_data"
+            onPress={handleClear}
+            containerStyle={styles.button}
+          />
+          <CustomButton
+            buttonSize="large"
+            buttonType="solid"
+            languageKey="screen_button_list.insert_data"
+            onPress={handleInsert}
+            containerStyle={styles.button}
+          />
+          <CustomButton
+            buttonSize="large"
+            buttonType="solid"
+            languageKey="screen_button_list.list_a"
+            onPress={handleNavigateToCryptoList}
+            containerStyle={styles.button}
+          />
+          <CustomButton
+            buttonSize="large"
+            buttonType="solid"
+            languageKey="screen_button_list.list_b"
+            onPress={handleNavigateToFiatList}
+            containerStyle={styles.button}
+          />
+          <CustomButton
+            buttonSize="large"
+            buttonType="solid"
+            languageKey="screen_button_list.list_all"
+            onPress={handleShowAll}
+            containerStyle={styles.button}
+          />
+        </View>
+        <CustomAlert
+          isVisible={isAlertVisible}
+          title={alertTitle}
+          content={alertContent}
+          onClose={closeAlert}
         />
       </View>
-      <CustomAlert
-        isVisible={isAlertVisible}
-        title={alertTitle}
-        content={alertContent}
-        onClose={closeAlert}
-      />
     </SafeScreen>
   );
 }
@@ -197,7 +106,12 @@ function ButtonList({ navigation }: RootScreenProps<Paths.ButtonList>) {
 const styles = {
   button: {
     width: 300,
-    marginBottom: 10,
+    marginBottom: 16,
+  },
+  languageButton: {
+    marginRight: 16,
+    height: 48,
+    marginBottom: 48
   },
 };
 
