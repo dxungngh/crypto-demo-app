@@ -20,6 +20,10 @@
       "success_title": "Success",
       "success_insert": "✔ Data inserted successfully"
     },
+    "screen_currency_list": {
+      "search_crypto": "Search crypto",
+      "search_fiat": "Search fiat"
+    },
     "error_boundary": {
       "title": "Oops! Something went wrong.",
       "description": "We are sorry for the inconvenience. Please try again later.",
