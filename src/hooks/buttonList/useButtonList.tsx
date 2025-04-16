@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useCurrencyInfo } from '@/hooks/domain/currencyInfo/useCurrencyInfo';
+import { useTranslation } from 'react-i18next';
 
 export const useButtonList = () => {
+    const { t } = useTranslation();
     const {
-        saveAllData,
-        saveStatus,
         clearData,
         clearStatus,
+        saveAllData,
+        saveStatus,
         resetClearStatus,
-        resetSaveStatus
+        resetSaveStatus,
     } = useCurrencyInfo();
 
     const [isAlertVisible, setAlertVisible] = useState(false);
@@ -16,33 +18,31 @@ export const useButtonList = () => {
     const [alertContent, setAlertContent] = useState('');
 
     useEffect(() => {
-        console.log('useButtonList: ' + clearStatus + ' --- ' + saveStatus);
+        console.log('clearStatus', clearStatus);
+        console.log('saveStatus', saveStatus);
         if (saveStatus === 'success') {
-            setAlertTitle('screen_button_list.success_title');
-            setAlertContent('screen_button_list.success_insert');
+            setAlertTitle(t('screen_button_list.success_title'));
+            setAlertContent(t('screen_button_list.success_insert'));
             setAlertVisible(true);
         } else if (clearStatus === 'success') {
-            setAlertTitle('screen_button_list.success_title');
-            setAlertContent('screen_button_list.success_clear');
+            setAlertTitle(t('screen_button_list.success_title'));
+            setAlertContent(t('screen_button_list.success_clear'));
             setAlertVisible(true);
         }
     }, [saveStatus, clearStatus]);
 
     const closeAlert = () => {
-        console.log('closeAlert');
         setAlertVisible(false);
         resetClearStatus();
         resetSaveStatus();
-    }
+    };
 
     return {
-        saveAllData,
-        saveStatus,
-        clearData,
-        clearStatus,
         isAlertVisible,
         alertTitle,
         alertContent,
         closeAlert,
+        saveAllData,
+        clearData
     };
 };

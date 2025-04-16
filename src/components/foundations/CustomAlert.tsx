@@ -92,7 +92,7 @@ const CustomAlert = forwardRef(
                             {contentState}
                         </CustomTextBodyLarge>
                         <CustomButton
-                            buttonSize="large"
+                            buttonSize="medium"
                             buttonType="solid"
                             children={confirmText} // Confirm
                             onPress={() => {
@@ -123,7 +123,7 @@ const Styles = StyleSheet.create({
         flexDirection: 'column',
         padding: 24,
         backgroundColor: 'white',
-        width: '50%',
+        width: '70%',
         borderRadius: 12,
     },
 });

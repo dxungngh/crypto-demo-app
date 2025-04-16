@@ -1,6 +1,5 @@
 import { View } from 'react-native';
 import { useTheme } from '@/theme';
-import { useCurrencyInfo } from '@/hooks/domain/currencyInfo/useCurrencyInfo';
 import { SafeScreen } from '@/components/templates';
 import CustomButton from '@/components/foundations/CustomButton';
 import CustomAlert from '@/components/foundations/CustomAlert';
@@ -10,21 +9,13 @@ function ButtonList() {
   const { layout } = useTheme();
 
   const {
-    saveAllData,
-    saveStatus,
-    clearData,
-    clearStatus,
-  } = useCurrencyInfo();
-
-  const {
     isAlertVisible,
     alertTitle,
     alertContent,
     closeAlert,
+    clearData,
+    saveAllData
   } = useButtonList();
-
-  console.log('clearStatus: ', clearStatus);
-  console.log('saveStatus: ', saveStatus);
 
   const listA = [
     {
@@ -158,16 +149,14 @@ function ButtonList() {
         <CustomButton
           buttonSize="large"
           buttonType="solid"
-          languageKey={clearStatus === 'pending' ? 'screen_button_list.clearing' : 'screen_button_list.clear_data'}
+          languageKey={'screen_button_list.clear_data'}
           onPress={handleClear}
-          disabled={clearStatus === 'pending'}
           containerStyle={styles.button}
         />
         <CustomButton
           buttonSize="large"
           buttonType="solid"
-          languageKey={saveStatus === 'pending' ? "screen_button_list.insert_data" : "screen_button_list.insert_data"}
-          disabled={saveStatus === 'pending'}
+          languageKey={"screen_button_list.insert_data"}
           onPress={handleInsert}
           containerStyle={styles.button}
         />

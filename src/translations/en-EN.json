@@ -16,7 +16,9 @@
       "list_all": "Currency List A + B",
       "clearing": "Clearing...",
       "success_clear": "✔ Data cleared successfully",
-      "error_clear": "❌ Failed to clear data"
+      "error_clear": "❌ Failed to clear data",
+      "success_title": "Success",
+      "success_insert": "✔ Data inserted successfully"
     },
     "error_boundary": {
       "title": "Oops! Something went wrong.",
