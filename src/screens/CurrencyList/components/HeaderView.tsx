@@ -3,12 +3,12 @@ import { useTheme } from '@/theme';
 import { IconByVariant } from '@/components/atoms';
 import CustomTextInput from '@/components/foundations/CustomTextInput';
 
-export interface HeaderProps {
+export interface HeaderViewProps {
     placeholder?: string;
     onBackPress?: () => void;
 }
 
-function Header(props: HeaderProps) {
+function HeaderView(props: HeaderViewProps) {
     const {
         placeholder,
         onBackPress
@@ -47,4 +47,4 @@ function Header(props: HeaderProps) {
     );
 }
 
-export default Header;
+export default HeaderView;

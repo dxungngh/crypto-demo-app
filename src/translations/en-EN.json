@@ -22,7 +22,8 @@
     },
     "screen_currency_list": {
       "search_crypto": "Search crypto",
-      "search_fiat": "Search fiat"
+      "search_fiat": "Search fiat",
+      "no_data": "No results. Please try again."
     },
     "error_boundary": {
       "title": "Oops! Something went wrong.",
