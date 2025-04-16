@@ -4,21 +4,26 @@
       "full": "React Native CryptoDemoApp",
       "initials": "RNB"
     },
-    "common_error": "哎呀！发生了错误。",
+    "common_error": "Oops! Something went wrong.",
+    "startup": {
+      "welcome": "Welcome to the Demo app of Crypto.com"
+    },
     "screen_button_list": {
-      "clear_data": "清除数据",
-      "insert_data": "插入数据",
-      "list_a": "货币列表 A - 加密货币",
-      "list_b": "货币列表 B - 法定货币",
-      "list_all": "货币列表 A + B",
-      "clearing": "正在清除...",
-      "success_clear": "✔ 数据已成功清除",
-      "error_clear": "❌ 清除数据失败"
+      "clear_data": "Clear the data",
+      "insert_data": "Insert the data",
+      "list_a": "Currency List A - Crypto",
+      "list_b": "Currency List B - Fiat",
+      "list_all": "Currency List A + B",
+      "clearing": "Clearing...",
+      "success_clear": "✔ Data cleared successfully",
+      "error_clear": "❌ Failed to clear data",
+      "success_title": "Success",
+      "success_insert": "✔ Data inserted successfully"
     },
     "error_boundary": {
-      "title": "哎呀！发生了错误。",
-      "description": "很抱歉造成不便。请稍后再试。",
-      "cta": "重新加载页面"
+      "title": "Oops! Something went wrong.",
+      "description": "We are sorry for the inconvenience. Please try again later.",
+      "cta": "Reload the screen"
     }
   }
 }

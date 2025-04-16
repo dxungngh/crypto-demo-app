@@ -29,13 +29,7 @@ export const useCurrencyInfo = () => {
   /**
    * Save a full list of currencies to storage.
    */
-  const {
-    mutate: saveData,
-    status: saveStatus,
-    isSuccess: isSaveSuccess,
-    isError: isSaveError,
-    reset: resetSaveStatus,
-  } = useMutation({
+  const saveMutation = useMutation({
     mutationFn: (data: CurrencyInfo[]) => Promise.resolve(CurrencyInfoService.saveCryptoList(data)),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: currencyListQueryKey });
@@ -56,19 +50,13 @@ export const useCurrencyInfo = () => {
     }));
 
     const allList = [...list1, ...list2];
-    saveData(allList);
+    saveMutation.mutate(allList);
   }
 
   /**
    * Clear all currencies from storage.
    */
-  const {
-    mutate: clearData,
-    status: clearStatus,
-    isSuccess: isClearSuccess,
-    isError: isClearError,
-    reset: resetClearStatus,
-  } = useMutation({
+  const clearMutation = useMutation({
     mutationFn: () => Promise.resolve(CurrencyInfoService.clearAll()),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: currencyListQueryKey });
@@ -80,15 +68,11 @@ export const useCurrencyInfo = () => {
     useSearch,
 
     saveAllData,
-    saveStatus,
-    isSaveSuccess,
-    isSaveError,
+    saveStatus: saveMutation.status,
+    resetSaveStatus: saveMutation.reset,
 
-    clearData,
-    clearStatus,
-    isClearSuccess,
-    isClearError,
-    resetClearStatus,
-    resetSaveStatus
+    clearData: clearMutation.mutate,
+    clearStatus: clearMutation.status,
+    resetClearStatus: clearMutation.reset,
   };
 };
