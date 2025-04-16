@@ -8,15 +8,22 @@ import { z } from 'zod';
 export const currencyTypeSchema = z.enum(['crypto', 'fiat']);
 export type CurrencyType = z.infer<typeof currencyTypeSchema>;
 
+export type RawCurrency = {
+  id: string;
+  name: string;
+  symbol: string;
+  code?: string;
+};
+
 /**
  * Schema definition for a single currency object.
  */
 export const currencyInfoSchema = z.object({
-  id: z.number(),                         // Unique identifier
+  id: z.string(),                         // Unique identifier
   name: z.string(),                       // Currency name (e.g. "Bitcoin")
   symbol: z.string(),                     // Currency symbol (e.g. "BTC")
-  type: currencyTypeSchema,              // Type of currency: 'crypto' or 'fiat'
-  isAvailableToBuy: z.boolean(),         // Whether this currency can be purchased
+  code: z.string(),                       // Currency code (e.g. "BTC")
+  type: currencyTypeSchema,               // Type of currency: 'crypto' or 'fiat'
 });
 
 export type CurrencyInfo = z.infer<typeof currencyInfoSchema>;
