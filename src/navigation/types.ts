@@ -7,6 +7,5 @@ export type RootScreenProps<
 
 export type RootStackParamList = {
   [Paths.ButtonList]: undefined;
-  [Paths.Startup]: undefined;
   [Paths.CurrencyList]: { isCurrencyList: boolean, isFiatList: boolean };
 };

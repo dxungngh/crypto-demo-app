@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useCurrencyInfo } from '@/hooks/domain/currencyInfo/useCurrencyInfo';
 import { useTranslation } from 'react-i18next';
+import { useCallback } from 'react';
+import { Paths } from '@/navigation/paths';
+import type { NavigationProp } from '@react-navigation/native';
+import type { RootStackParamList } from '@/navigation/types';
 
-export const useButtonList = () => {
+export const useButtonList = (navigation: NavigationProp<RootStackParamList>) => {
     const { t } = useTranslation();
     const {
         clearData,
@@ -31,6 +35,14 @@ export const useButtonList = () => {
         }
     }, [saveStatus, clearStatus]);
 
+    const handleNavigateToCryptoList = useCallback(() => {
+        navigation.navigate(Paths.CurrencyList, { isCurrencyList: true, isFiatList: false });
+    }, [navigation]);
+
+    const handleNavigateToFiatList = useCallback(() => {
+        navigation.navigate(Paths.CurrencyList, { isCurrencyList: false, isFiatList: true });
+    }, [navigation]);
+
     const closeAlert = () => {
         setAlertVisible(false);
         resetClearStatus();
@@ -43,6 +55,8 @@ export const useButtonList = () => {
         alertContent,
         closeAlert,
         saveAllData,
-        clearData
+        clearData,
+        handleNavigateToCryptoList,
+        handleNavigateToFiatList,
     };
 };
