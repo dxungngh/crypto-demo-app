@@ -13,7 +13,11 @@ function CurrencyList({ navigation, route }: RootScreenProps<Paths.CurrencyList>
   const { isCurrencyList = false, isFiatList = false } = route.params;
   const { layout } = useTheme();
 
-  const { dataList, placeholder } = useCurrencyList(isCurrencyList, isFiatList);
+  const {
+    dataList,
+    placeholder,
+    setInputText
+  } = useCurrencyList(isCurrencyList, isFiatList);
 
   const onBackPress = () => {
     navigation.goBack();
@@ -32,8 +36,9 @@ function CurrencyList({ navigation, route }: RootScreenProps<Paths.CurrencyList>
         <HeaderView
           placeholder={placeholder}
           onBackPress={onBackPress}
+          onTextChanged={(text) => { setInputText(text) }}
         />
-        {dataList && dataList.length > 0 ? (
+        {dataList && Array.isArray(dataList) && dataList.length > 0 ? (
           <DataListView dataList={dataList} />
         ) : (
           <NoDataView />
