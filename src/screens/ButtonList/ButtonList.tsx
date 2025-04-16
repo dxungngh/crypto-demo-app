@@ -4,8 +4,10 @@ import { SafeScreen } from '@/components/templates';
 import CustomButton from '@/components/foundations/CustomButton';
 import CustomAlert from '@/components/foundations/CustomAlert';
 import { useButtonList } from '@/hooks/buttonList/useButtonList';
+import { Paths } from '@/navigation/paths';
+import { RootScreenProps } from '@/navigation/types';
 
-function ButtonList() {
+function ButtonList({ navigation }: RootScreenProps<Paths.ButtonList>) {
   const { layout } = useTheme();
 
   const {
@@ -132,8 +134,8 @@ function ButtonList() {
   // Handlers
   const handleClear = () => clearData();
   const handleInsert = () => saveAllData(listA, listB);
-  const handleSwitchToCrypto = () => console.log('Switch to crypto list');
-  const handleSwitchToFiat = () => console.log('Switch to fiat list');
+  const handleSwitchToCrypto = () => navigation.navigate(Paths.CurrencyList, { isCurrencyList: true, isFiatList: false });
+  const handleSwitchToFiat = () => navigation.navigate(Paths.CurrencyList, { isCurrencyList: false, isFiatList: true });
   const handleShowAll = () => console.log('Show all A + B');
 
   return (

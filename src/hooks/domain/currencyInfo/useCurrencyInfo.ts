@@ -10,7 +10,7 @@ export const useCurrencyInfo = () => {
   /**
    * Fetch currencies by type ('crypto' or 'fiat').
    */
-  const useCurrencyList = (type: CurrencyType) =>
+  const fetchCurrencyList = (type: CurrencyType) =>
     useQuery<CurrencyInfo[]>({
       queryKey: [...currencyListQueryKey, type],
       queryFn: () => Promise.resolve(CurrencyInfoService.getByType(type)),
@@ -64,7 +64,7 @@ export const useCurrencyInfo = () => {
   });
 
   return {
-    useCurrencyList,
+    fetchCurrencyList,
     useSearch,
 
     saveAllData,

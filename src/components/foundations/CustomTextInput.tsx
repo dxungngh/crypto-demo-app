@@ -214,8 +214,10 @@ const Styles = StyleSheet.create({
   container: {},
   input_container: {
     flexDirection: 'row',
-    borderWidth: 1,
-    borderRadius: 8,
+    borderBottomWidth: 1,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0
   },
   icon_green_checked: {
     marginLeft: 8,
