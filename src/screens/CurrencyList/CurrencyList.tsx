@@ -3,19 +3,17 @@ import { useTheme } from '@/theme';
 import type { RootScreenProps } from '@/navigation/types';
 import { Paths } from '@/navigation/paths';
 import { SafeScreen } from '@/components/templates';
-import { CustomTextBodyLarge } from '@/components/foundations/CustomText';
 import { useCurrencyList } from '@/hooks/currencyList';
-import Header from './components/Header';
+import HeaderView from './components/HeaderView';
 import CustomColors from '@/components/foundations/CustomColors';
+import NoDataView from './components/NoDataView';
+import DataListView from './components/DataListView';
 
 function CurrencyList({ navigation, route }: RootScreenProps<Paths.CurrencyList>) {
   const { isCurrencyList = false, isFiatList = false } = route.params;
-
   const { layout } = useTheme();
-  const {
-    dataList,
-    placeholder
-  } = useCurrencyList(isCurrencyList, isFiatList);
+
+  const { dataList, placeholder } = useCurrencyList(isCurrencyList, isFiatList);
 
   const onBackPress = () => {
     navigation.goBack();
@@ -31,16 +29,17 @@ function CurrencyList({ navigation, route }: RootScreenProps<Paths.CurrencyList>
           layout.justifyStart,
         ]}
       >
-        <Header
+        <HeaderView
           placeholder={placeholder}
           onBackPress={onBackPress}
         />
-        {dataList && dataList.length > 0 ?
-          <></>
-          :
-          <CustomTextBodyLarge languageKey='currencyList.noData' />}
+        {dataList && dataList.length > 0 ? (
+          <DataListView dataList={dataList} />
+        ) : (
+          <NoDataView />
+        )}
       </View>
-    </SafeScreen>
+    </SafeScreen >
   );
 }
 
