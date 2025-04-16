@@ -6,8 +6,8 @@ import CustomAlert from '@/components/foundations/CustomAlert';
 import { useButtonList } from '@/hooks/buttonList/useButtonList';
 import { Paths } from '@/navigation/paths';
 import { RootScreenProps } from '@/navigation/types';
-import { useI18n } from '@/hooks';
 import { cryptoList, fiatList } from '@/assets/data';
+import HeaderView from './components/HeaderView';
 
 function ButtonList({ navigation }: RootScreenProps<Paths.ButtonList>) {
   const { layout } = useTheme();
@@ -22,8 +22,6 @@ function ButtonList({ navigation }: RootScreenProps<Paths.ButtonList>) {
     handleNavigateToCryptoList,
     handleNavigateToFiatList
   } = useButtonList(navigation);
-
-  const { toggleLanguage } = useI18n();
 
   // Handlers
   const handleClear = () => clearData();
@@ -40,20 +38,13 @@ function ButtonList({ navigation }: RootScreenProps<Paths.ButtonList>) {
           layout.justifyStart,
         ]}
       >
-        <View style={[layout.row, layout.justifyEnd, styles.languageButton]}>
-          <CustomButton
-            buttonSize="small"
-            buttonType="secondary"
-            languageKey="screen_button_list.language"
-            onPress={toggleLanguage}
-            containerStyle={{ width: 140 }}
-          />
-        </View>
+        <HeaderView />
         <View
           style={[
             layout.col,
             layout.itemsCenter,
             layout.justifyCenter,
+            layout.flex_1
           ]}
         >
           <CustomButton
@@ -107,11 +98,6 @@ const styles = {
   button: {
     width: 300,
     marginBottom: 16,
-  },
-  languageButton: {
-    marginRight: 16,
-    height: 48,
-    marginBottom: 48
   },
 };
 
