@@ -1,5 +1,5 @@
 import { MMKV } from 'react-native-mmkv';
-import { CurrencyInfo, CurrencyType } from '@/domain/currency/schema';
+import { CurrencyInfo, CurrencyType } from '@/hooks/domain/currencyInfo/schema';
 
 const storage = new MMKV();
 const STORAGE_KEY = 'currencyList';
@@ -25,19 +25,30 @@ export const CurrencyInfoService = {
     return all.filter((item) => item.type === type);
   },
 
-  /**
-   * Get currencies that are available to buy.
-   */
-  getAvailableToBuy(): CurrencyInfo[] {
-    const all = CurrencyInfoService.getAll();
-    return all.filter((item) => item.isAvailableToBuy);
+  mergeWithoutDuplicates(
+    existing: CurrencyInfo[],
+    incoming: CurrencyInfo[]
+  ): CurrencyInfo[] {
+    const map = new Map<string, CurrencyInfo>();
+
+    for (const item of existing) {
+      map.set(item.id, item);
+    }
+    // Add incoming items, replacing any existing ones with the same id
+    for (const item of incoming) {
+      map.set(item.id, item);
+    }
+
+    return Array.from(map.values());
   },
 
   /**
    * Save a list of currencies into storage.
    */
-  saveAll(data: CurrencyInfo[]): void {
-    storage.set(STORAGE_KEY, JSON.stringify(data));
+  saveCryptoList(data: CurrencyInfo[]): void {
+    const existing = CurrencyInfoService.getAll();
+    const deduplicated = CurrencyInfoService.mergeWithoutDuplicates(existing, data);
+    storage.set(STORAGE_KEY, JSON.stringify(deduplicated));
   },
 
   /**

@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
-import { CurrencyInfoService } from '@/services/currencyInfoService';
-import { CurrencyInfo, CurrencyType } from '@/domain/currency/schema';
+import { CurrencyInfoService } from '@/hooks/domain/currencyInfo/currencyInfoService';
+import { RawCurrency, CurrencyInfo, CurrencyType } from '@/hooks/domain/currencyInfo/schema';
 
 const currencyListQueryKey = ['currencyList'];
 
@@ -17,15 +17,6 @@ export const useCurrencyInfo = () => {
     });
 
   /**
-   * Fetch currencies that are available to buy.
-   */
-  const useAvailableToBuy = () =>
-    useQuery<CurrencyInfo[]>({
-      queryKey: [...currencyListQueryKey, 'available'],
-      queryFn: () => Promise.resolve(CurrencyInfoService.getAvailableToBuy()),
-    });
-
-  /**
    * Fetch currencies matching a search query.
    */
   const useSearch = (query: string) =>
@@ -38,18 +29,47 @@ export const useCurrencyInfo = () => {
   /**
    * Save a full list of currencies to storage.
    */
-  const saveMutation = useMutation({
-    mutationFn: (data: CurrencyInfo[]) => CurrencyInfoService.saveAll(data),
+  const {
+    mutate: saveData,
+    status: saveStatus,
+    isSuccess: isSaveSuccess,
+    isError: isSaveError,
+    reset: resetSaveStatus,
+  } = useMutation({
+    mutationFn: (data: CurrencyInfo[]) => Promise.resolve(CurrencyInfoService.saveCryptoList(data)),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: currencyListQueryKey });
     },
   });
 
+  const saveAllData = (cryptoList: RawCurrency[], fiatList: RawCurrency[]) => {
+    const list1: CurrencyInfo[] = cryptoList.map((item) => ({
+      ...item,
+      code: '',
+      type: 'crypto' as const,
+    }));
+
+    const list2: CurrencyInfo[] = fiatList.map((item) => ({
+      ...item,
+      code: item.code ? item.code : '',
+      type: 'fiat' as const,
+    }));
+
+    const allList = [...list1, ...list2];
+    saveData(allList);
+  }
+
   /**
    * Clear all currencies from storage.
    */
-  const clearMutation = useMutation({
-    mutationFn: () => CurrencyInfoService.clearAll(),
+  const {
+    mutate: clearData,
+    status: clearStatus,
+    isSuccess: isClearSuccess,
+    isError: isClearError,
+    reset: resetClearStatus,
+  } = useMutation({
+    mutationFn: () => Promise.resolve(CurrencyInfoService.clearAll()),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: currencyListQueryKey });
     },
@@ -57,9 +77,18 @@ export const useCurrencyInfo = () => {
 
   return {
     useCurrencyList,
-    useAvailableToBuy,
     useSearch,
-    saveMutation,
-    clearMutation,
+
+    saveAllData,
+    saveStatus,
+    isSaveSuccess,
+    isSaveError,
+
+    clearData,
+    clearStatus,
+    isClearSuccess,
+    isClearError,
+    resetClearStatus,
+    resetSaveStatus
   };
 };

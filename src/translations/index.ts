@@ -6,19 +6,19 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import en from './en-EN.json';
-import fr from './fr-FR.json';
+import cn from './cn-CN.json';
 
 export const defaultNS = 'cryptodemoapp';
 
 export const resources = {
   'en-EN': en,
-  'fr-FR': fr,
+  'cn-CN': cn,
 } as const satisfies Record<Language, unknown>;
 
 void i18n.use(initReactI18next).init({
   defaultNS,
-  fallbackLng: 'fr-FR',
-  lng: 'fr-FR',
+  fallbackLng: 'en-EN',
+  lng: 'en-EN',
   resources,
 });
 
