@@ -19,6 +19,7 @@
       "success_insert": "✔ 数据已成功插入"
     },
     "screen_currency_list": {
+      "search_all": "搜索所有",
       "search_crypto": "搜索加密货币",
       "search_fiat": "搜索法定货币",
       "no_data": "无结果。请再试一次。"

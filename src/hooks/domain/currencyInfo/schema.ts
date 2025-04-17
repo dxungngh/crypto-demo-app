@@ -1,3 +1,4 @@
+import { CURRENCY_TYPE } from '@/constants';
 import { z } from 'zod';
 
 /**
@@ -5,7 +6,7 @@ import { z } from 'zod';
  * - 'crypto': Cryptocurrency (e.g. BTC, ETH)
  * - 'fiat': Fiat currency (e.g. USD, VND)
  */
-export const currencyTypeSchema = z.enum(['crypto', 'fiat']);
+export const currencyTypeSchema = z.enum([CURRENCY_TYPE.CRYPTO, CURRENCY_TYPE.FIAT]);
 export type CurrencyType = z.infer<typeof currencyTypeSchema>;
 
 export type RawCurrency = {

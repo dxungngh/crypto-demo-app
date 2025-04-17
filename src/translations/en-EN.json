@@ -19,6 +19,7 @@
       "success_insert": "✔ Data inserted successfully"
     },
     "screen_currency_list": {
+      "search_all": "Search all",
       "search_crypto": "Search crypto",
       "search_fiat": "Search fiat",
       "no_data": "No results. Please try again."
