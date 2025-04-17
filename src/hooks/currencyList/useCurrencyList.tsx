@@ -1,39 +1,43 @@
 import { useTranslation } from 'react-i18next';
 import { useCurrencyInfo } from '@/hooks/domain/currencyInfo/useCurrencyInfo';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useDebounce } from '@/hooks/common';
 
 export const useCurrencyList = (isCurrencyList: boolean, isFiatList: boolean) => {
     const { t } = useTranslation();
     const { fetchCurrencyList, searchCurrencyList } = useCurrencyInfo();
     const [inputText, setInputText] = useState<string>('');
 
+    const debouncedInput = useDebounce(inputText);
+
+    const hasInput = debouncedInput.trim().length > 0;
+
     const cryptoQuery = fetchCurrencyList('crypto');
     const fiatQuery = fetchCurrencyList('fiat');
 
-    const cryptoSearchQuery = searchCurrencyList(inputText, 'crypto');
-    const fiatSearchQuery = searchCurrencyList(inputText, 'fiat');
+    const cryptoSearchQuery = searchCurrencyList(debouncedInput, 'crypto');
+    const fiatSearchQuery = searchCurrencyList(debouncedInput, 'fiat');
 
-    function getDataList() {
-        const hasInput = inputText && inputText.trim().length > 0;
+    const dataList = useMemo(() => {
         if (hasInput) {
-            if (isCurrencyList) {
-                return cryptoSearchQuery.data;
-            }
-            if (isFiatList) {
-                return fiatSearchQuery.data;
-            }
-        }
-        if (isCurrencyList) {
-            return cryptoQuery.data;
-        }
-        if (isFiatList) {
-            return fiatQuery.data;
+            if (isCurrencyList) return cryptoSearchQuery.data;
+            if (isFiatList) return fiatSearchQuery.data;
+        } else {
+            if (isCurrencyList) return cryptoQuery.data;
+            if (isFiatList) return fiatQuery.data;
         }
         return [];
-    }
+    }, [
+        hasInput,
+        isCurrencyList,
+        isFiatList,
+        cryptoQuery.data,
+        fiatQuery.data,
+        cryptoSearchQuery.data,
+        fiatSearchQuery.data,
+    ]);
 
-    function getIsLoading() {
-        const hasInput = inputText.trim().length > 0;
+    const isLoading = useMemo(() => {
         if (isCurrencyList) {
             return hasInput ? cryptoSearchQuery.isLoading : cryptoQuery.isLoading;
         }
@@ -41,19 +45,30 @@ export const useCurrencyList = (isCurrencyList: boolean, isFiatList: boolean) =>
             return hasInput ? fiatSearchQuery.isLoading : fiatQuery.isLoading;
         }
         return false;
-    }
+    }, [
+        hasInput,
+        isCurrencyList,
+        isFiatList,
+        cryptoQuery.isLoading,
+        fiatQuery.isLoading,
+        cryptoSearchQuery.isLoading,
+        fiatSearchQuery.isLoading,
+    ]);
 
-    function getPlaceholder() {
+    const placeholder = useMemo(() => {
         if (isCurrencyList) return t('screen_currency_list.search_crypto');
         if (isFiatList) return t('screen_currency_list.search_fiat');
         return '';
-    }
+    }, [isCurrencyList, isFiatList, t]);
+
+    const hasData = useMemo(() => Array.isArray(dataList) && dataList.length > 0, [dataList]);
 
     return {
-        dataList: getDataList(),
-        isLoading: getIsLoading(),
-        placeholder: getPlaceholder(),
+        dataList,
+        isLoading,
+        placeholder,
         inputText,
         setInputText,
+        hasData,
     };
 };

@@ -6,7 +6,7 @@ import CustomAlert from '@/components/foundations/CustomAlert';
 import { useButtonList } from '@/hooks/buttonList/useButtonList';
 import { Paths } from '@/navigation/paths';
 import { RootScreenProps } from '@/navigation/types';
-import { cryptoList, fiatList } from '@/assets/data';
+import { cryptoList, fiatList, top100CryptoList } from '@/assets/data';
 import HeaderView from './components/HeaderView';
 
 function ButtonList({ navigation }: RootScreenProps<Paths.ButtonList>) {
@@ -20,13 +20,13 @@ function ButtonList({ navigation }: RootScreenProps<Paths.ButtonList>) {
     clearData,
     saveAllData,
     handleNavigateToCryptoList,
-    handleNavigateToFiatList
+    handleNavigateToFiatList,
+    handleNavigateToShowAll
   } = useButtonList(navigation);
 
   // Handlers
   const handleClear = () => clearData();
-  const handleInsert = () => saveAllData(cryptoList, fiatList);
-  const handleShowAll = () => console.log('Show all A + B');
+  const handleInsert = () => saveAllData(top100CryptoList, fiatList);
 
   return (
     <SafeScreen>
@@ -79,7 +79,7 @@ function ButtonList({ navigation }: RootScreenProps<Paths.ButtonList>) {
             buttonSize="large"
             buttonType="solid"
             languageKey="screen_button_list.list_all"
-            onPress={handleShowAll}
+            onPress={handleNavigateToShowAll}
             containerStyle={styles.button}
           />
         </View>

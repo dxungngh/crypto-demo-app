@@ -43,6 +43,10 @@ export const useButtonList = (navigation: NavigationProp<RootStackParamList>) =>
         navigation.navigate(Paths.CurrencyList, { isCurrencyList: false, isFiatList: true });
     }, [navigation]);
 
+    const handleNavigateToShowAll = useCallback(() => {
+        navigation.navigate(Paths.CurrencyList, { isCurrencyList: true, isFiatList: true });
+    }, [navigation]);
+
     const closeAlert = () => {
         setAlertVisible(false);
         resetClearStatus();
@@ -58,5 +62,6 @@ export const useButtonList = (navigation: NavigationProp<RootStackParamList>) =>
         clearData,
         handleNavigateToCryptoList,
         handleNavigateToFiatList,
+        handleNavigateToShowAll
     };
 };

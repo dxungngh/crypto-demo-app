@@ -1,7 +1,8 @@
-import { TouchableOpacity, View } from 'react-native';
+import { Platform, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '@/theme';
 import { IconByVariant } from '@/components/atoms';
 import CustomTextInput from '@/components/foundations/CustomTextInput';
+import CustomColors from '@/components/foundations/CustomColors';
 
 export interface HeaderViewProps {
     placeholder?: string;
@@ -24,7 +25,7 @@ function HeaderView(props: HeaderViewProps) {
                 layout.itemsCenter,
                 layout.justifyBetween,
                 layout.fullWidth,
-                { height: 48, borderWidth: 0 }
+                styles.headerContainer,
             ]}
         >
             <TouchableOpacity
@@ -33,21 +34,42 @@ function HeaderView(props: HeaderViewProps) {
                     layout.itemsCenter,
                     layout.justifyCenter,
                     layout.left0,
-                    { height: 48, width: '10%' }
+                    styles.backButtonContainer,
                 ]}>
                 <IconByVariant
                     height={24}
-                    path="back"
                     width={24}
+                    path="back"
                 />
             </TouchableOpacity>
-            <CustomTextInput
-                containerStyle={{ width: '90%' }}
-                placeholder={placeholder}
-                onChangeText={(input) => { onTextChanged(input) }}
-            />
+            <View style={[
+                layout.flex_1,
+                styles.searchContainer
+            ]}>
+                <CustomTextInput
+                    containerStyle={{ width: '100%' }}
+                    placeholder={placeholder}
+                    onChangeText={(input) => { onTextChanged(input) }}
+                />
+            </View>
         </View>
     );
 }
+
+const styles = {
+    headerContainer: {
+        height: 56,
+        paddingTop: Platform.OS === 'ios' ? 12 : 0,
+        paddingHorizontal: 12,
+        backgroundColor: CustomColors.white,
+    },
+    backButtonContainer: {
+        height: 40,
+        width: 40
+    },
+    searchContainer: {
+        marginLeft: 12
+    }
+};
 
 export default HeaderView;

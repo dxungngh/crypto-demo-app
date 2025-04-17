@@ -1,7 +1,7 @@
 import CustomButton from "@/components/foundations/CustomButton";
 import { useI18n } from "@/hooks";
 import { useTheme } from "@/theme";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 
 function HeaderView() {
     const { layout } = useTheme();
@@ -28,8 +28,9 @@ function HeaderView() {
 
 const styles = {
     headerView: {
-        marginRight: 16,
-        marginBottom: 48,
+        height: 56,
+        paddingTop: Platform.OS === 'ios' ? 12 : 0,
+        paddingHorizontal: 12,
     },
     languageButton: {
         width: 140
