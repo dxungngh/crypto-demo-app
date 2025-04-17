@@ -3,7 +3,7 @@ import { useTheme } from '@/theme';
 import { SafeScreen } from '@/components/templates';
 import CustomButton from '@/components/foundations/CustomButton';
 import CustomAlert from '@/components/foundations/CustomAlert';
-import { useButtonList } from '@/hooks/buttonList/useButtonList';
+import { useButtonList } from '@/hooks/screens/buttonList/useButtonList';
 import { Paths } from '@/navigation/paths';
 import { RootScreenProps } from '@/navigation/types';
 import { cryptoList, fiatList, top100CryptoList } from '@/assets/data';

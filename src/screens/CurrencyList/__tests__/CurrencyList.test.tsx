@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import CurrencyList from '../CurrencyList';
-import * as currencyListHook from '@/hooks/currencyList';
+import * as currencyListHook from '@/hooks/screens/currencyList';
 import ThemeProvider from '@/theme/ThemeProvider/ThemeProvider';
 import { MMKV } from 'react-native-mmkv';
 
 jest.mock('react-native-mmkv');
-jest.mock('@/hooks/currencyList');
+jest.mock('@/hooks/screens/currencyList');
 jest.mock('@/components/templates/SafeScreen/SafeScreen', () => ({ children }: any) => <>{children}</>);
 jest.mock('@/components/foundations/CustomLoading', () => {
     const React = require('react');

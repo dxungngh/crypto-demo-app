@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react-native';
 import ButtonList from '../ButtonList';
 import ThemeProvider from '@/theme/ThemeProvider/ThemeProvider';
 import { MMKV } from 'react-native-mmkv';
-import * as buttonListHook from '@/hooks/buttonList/useButtonList';
+import * as buttonListHook from '@/hooks/screens/buttonList/useButtonList';
 import { Paths } from '@/navigation/paths';
 
 // Mock MMKV
