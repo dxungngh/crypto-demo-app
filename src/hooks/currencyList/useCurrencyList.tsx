@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useCurrencyInfo } from '@/hooks/domain/currencyInfo/useCurrencyInfo';
 import { useMemo, useState } from 'react';
 import { useDebounce } from '@/hooks/common';
+import { CURRENCY_TYPE } from '@/constants';
 
 export const useCurrencyList = (isCurrencyList: boolean, isFiatList: boolean) => {
     const { t } = useTranslation();
@@ -9,24 +10,42 @@ export const useCurrencyList = (isCurrencyList: boolean, isFiatList: boolean) =>
     const [inputText, setInputText] = useState<string>('');
 
     const debouncedInput = useDebounce(inputText);
-
     const hasInput = debouncedInput.trim().length > 0;
 
-    const cryptoQuery = fetchCurrencyList('crypto');
-    const fiatQuery = fetchCurrencyList('fiat');
+    const cryptoQuery = fetchCurrencyList(CURRENCY_TYPE.CRYPTO);
+    const fiatQuery = fetchCurrencyList(CURRENCY_TYPE.FIAT);
 
-    const cryptoSearchQuery = searchCurrencyList(debouncedInput, 'crypto');
-    const fiatSearchQuery = searchCurrencyList(debouncedInput, 'fiat');
+    const cryptoSearchQuery = searchCurrencyList(debouncedInput, CURRENCY_TYPE.CRYPTO);
+    const fiatSearchQuery = searchCurrencyList(debouncedInput, CURRENCY_TYPE.FIAT);
 
     const dataList = useMemo(() => {
         if (hasInput) {
-            if (isCurrencyList) return cryptoSearchQuery.data;
-            if (isFiatList) return fiatSearchQuery.data;
+            if (isCurrencyList && isFiatList) {
+                return [
+                    ...(cryptoSearchQuery.data ?? []),
+                    ...(fiatSearchQuery.data ?? []),
+                ];
+            } else if (isCurrencyList) {
+                return cryptoSearchQuery.data ?? [];
+            } else if (isFiatList) {
+                return fiatSearchQuery.data ?? [];
+            } else {
+                return [];
+            }
         } else {
-            if (isCurrencyList) return cryptoQuery.data;
-            if (isFiatList) return fiatQuery.data;
+            if (isCurrencyList && isFiatList) {
+                return [
+                    ...(cryptoQuery.data ?? []),
+                    ...(fiatQuery.data ?? []),
+                ];
+            } else if (isCurrencyList) {
+                return cryptoQuery.data ?? [];
+            } else if (isFiatList) {
+                return fiatQuery.data ?? [];
+            } else {
+                return [];
+            }
         }
-        return [];
     }, [
         hasInput,
         isCurrencyList,
@@ -38,13 +57,17 @@ export const useCurrencyList = (isCurrencyList: boolean, isFiatList: boolean) =>
     ]);
 
     const isLoading = useMemo(() => {
-        if (isCurrencyList) {
+        if (isCurrencyList && isFiatList) {
+            return hasInput
+                ? (cryptoSearchQuery.isLoading || fiatSearchQuery.isLoading)
+                : (cryptoQuery.isLoading || fiatQuery.isLoading);
+        } else if (isCurrencyList) {
             return hasInput ? cryptoSearchQuery.isLoading : cryptoQuery.isLoading;
-        }
-        if (isFiatList) {
+        } else if (isFiatList) {
             return hasInput ? fiatSearchQuery.isLoading : fiatQuery.isLoading;
+        } else {
+            return false;
         }
-        return false;
     }, [
         hasInput,
         isCurrencyList,
@@ -56,9 +79,13 @@ export const useCurrencyList = (isCurrencyList: boolean, isFiatList: boolean) =>
     ]);
 
     const placeholder = useMemo(() => {
-        if (isCurrencyList) return t('screen_currency_list.search_crypto');
-        if (isFiatList) return t('screen_currency_list.search_fiat');
-        return '';
+        if (isCurrencyList && !isFiatList) {
+            return t('screen_currency_list.search_crypto');
+        } else if (!isCurrencyList && isFiatList) {
+            return t('screen_currency_list.search_fiat');
+        } else {
+            return t('screen_currency_list.search_all');
+        }
     }, [isCurrencyList, isFiatList, t]);
 
     const hasData = useMemo(() => Array.isArray(dataList) && dataList.length > 0, [dataList]);
