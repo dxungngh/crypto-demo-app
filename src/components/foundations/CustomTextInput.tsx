@@ -9,13 +9,13 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { VCBTextBodyMedium, VCBTextLabelLarge } from './VCBText';
+import { CustomTextBodyMedium, CustomTextLabelLarge } from './CustomText';
 import { IconByVariant } from '../atoms';
 import { useTranslation } from 'react-i18next';
-import VCBColors from './VCBColors';
-import VCBTypeface from './VCBTypeface';
+import CustomColors from './CustomColors';
+import CustomTypeface from './CustomTypeface';
 
-export interface VCBTextInputProps extends TextInputProps {
+export interface CustomTextInputProps extends TextInputProps {
   /**
    * Key from LanguageOptions
    */
@@ -97,13 +97,13 @@ export interface VCBTextInputProps extends TextInputProps {
   isShowChecked?: boolean | undefined;
 }
 
-export default function VCBTextInput({
+export default function CustomTextInput({
   editable = true,
   isShowClearIcon = true,
   isShowChecked = false,
   placeholderLanguageKey,
   ...props
-}: VCBTextInputProps) {
+}: CustomTextInputProps) {
   const refTextInput = useRef<TextInput>(null);
   const [isFocus, setIsFocus] = useState(props.autoFocus);
   const [textValue, setTextValue] = useState('');
@@ -145,26 +145,26 @@ export default function VCBTextInput({
   };
 
   const getBorderColor = useCallback(() => {
-    if (props.errorMsg || props.errorMsgLanguageKey) return VCBColors.red_60;
+    if (props.errorMsg || props.errorMsgLanguageKey) return CustomColors.red_60;
     if (isFocus) {
-      return VCBColors.green_90;
+      return CustomColors.green_90;
     }
-    return VCBColors.gray_40;
+    return CustomColors.gray_40;
   }, [isFocus, props.errorMsg, props.errorMsgLanguageKey]);
 
   return (
     <View style={[props.containerStyle, Styles.container]}>
       {(props.label || props.labelLanguageKey) && (
-        <VCBTextLabelLarge languageKey={props.labelLanguageKey} style={{ marginBottom: 6 }}>
+        <CustomTextLabelLarge languageKey={props.labelLanguageKey} style={{ marginBottom: 6 }}>
           {props.label}
-        </VCBTextLabelLarge>
+        </CustomTextLabelLarge>
       )}
       <View
         style={[
           Styles.input_container,
           {
             borderColor: getBorderColor(),
-            backgroundColor: !editable ? VCBColors.gray_20 : VCBColors.white,
+            backgroundColor: !editable ? CustomColors.gray_20 : CustomColors.white,
           },
         ]}
       >
@@ -174,7 +174,7 @@ export default function VCBTextInput({
           ref={refTextInput}
           allowFontScaling={false}
           {...props}
-          style={[props.inputTextStyle, VCBTypeface.BodyLarge, Styles.text_input]}
+          style={[props.inputTextStyle, CustomTypeface.BodyLarge, Styles.text_input]}
           placeholder={
             placeholderLanguageKey
               ? t(placeholderLanguageKey)
@@ -191,7 +191,7 @@ export default function VCBTextInput({
               <IconByVariant
                 height={24}
                 path="close"
-                stroke={VCBColors.gray_100}
+                stroke={CustomColors.gray_100}
                 width={24}
               />
             </TouchableOpacity>
@@ -202,9 +202,9 @@ export default function VCBTextInput({
         {props.rightChild}
       </View>
       {(props.errorMsg || props.errorMsgLanguageKey) && (
-        <VCBTextBodyMedium languageKey={props.errorMsgLanguageKey} style={Styles.error_text}>
+        <CustomTextBodyMedium languageKey={props.errorMsgLanguageKey} style={Styles.error_text}>
           {props.errorMsg}
-        </VCBTextBodyMedium>
+        </CustomTextBodyMedium>
       )}
     </View>
   );
@@ -214,8 +214,10 @@ const Styles = StyleSheet.create({
   container: {},
   input_container: {
     flexDirection: 'row',
-    borderWidth: 1,
-    borderRadius: 8,
+    borderBottomWidth: 1,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0
   },
   icon_green_checked: {
     marginLeft: 8,
@@ -230,7 +232,7 @@ const Styles = StyleSheet.create({
   },
   error_text: {
     marginTop: 6,
-    color: VCBColors.red_60,
+    color: CustomColors.red_60,
   },
   text_input: {
     padding: 0,

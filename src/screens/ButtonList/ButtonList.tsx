@@ -1,21 +1,32 @@
-import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
-
-import { useI18n } from '@/hooks';
 import { useTheme } from '@/theme';
-
 import { SafeScreen } from '@/components/templates';
-import VCBButton from '@/components/foundations/VCBButton';
+import CustomButton from '@/components/foundations/CustomButton';
+import CustomAlert from '@/components/foundations/CustomAlert';
+import { useButtonList } from '@/hooks/buttonList/useButtonList';
+import { Paths } from '@/navigation/paths';
+import { RootScreenProps } from '@/navigation/types';
+import { cryptoList, fiatList, top100CryptoList } from '@/assets/data';
+import HeaderView from './components/HeaderView';
 
-function ButtonList() {
-  const { t } = useTranslation();
-  const { toggleLanguage } = useI18n();
+function ButtonList({ navigation }: RootScreenProps<Paths.ButtonList>) {
+  const { layout } = useTheme();
 
   const {
-    changeTheme,
-    layout,
-    variant,
-  } = useTheme();
+    isAlertVisible,
+    alertTitle,
+    alertContent,
+    closeAlert,
+    clearData,
+    saveAllData,
+    handleNavigateToCryptoList,
+    handleNavigateToFiatList,
+    handleNavigateToShowAll
+  } = useButtonList(navigation);
+
+  // Handlers
+  const handleClear = () => clearData();
+  const handleInsert = () => saveAllData(top100CryptoList, fiatList);
 
   return (
     <SafeScreen>
@@ -24,23 +35,69 @@ function ButtonList() {
           layout.flex_1,
           layout.col,
           layout.itemsCenter,
-          layout.justifyCenter,
+          layout.justifyStart,
         ]}
       >
-        <VCBButton buttonSize='large' buttonType='solid' languageKey='Clear the data' containerStyle={styles.buttonStyle} />
-        <VCBButton buttonSize='large' buttonType='solid' languageKey='Insert the data' containerStyle={styles.buttonStyle} />
-        <VCBButton buttonSize='large' buttonType='solid' languageKey='Currency List A - Crypto' containerStyle={styles.buttonStyle} />
-        <VCBButton buttonSize='large' buttonType='solid' languageKey='Currency List B - Crypto' containerStyle={styles.buttonStyle} />
-        <VCBButton buttonSize='large' buttonType='solid' languageKey='Currency List A + B' containerStyle={styles.buttonStyle} />
+        <HeaderView />
+        <View
+          style={[
+            layout.col,
+            layout.itemsCenter,
+            layout.justifyCenter,
+            layout.flex_1
+          ]}
+        >
+          <CustomButton
+            buttonSize="large"
+            buttonType="solid"
+            languageKey="screen_button_list.clear_data"
+            onPress={handleClear}
+            containerStyle={styles.button}
+          />
+          <CustomButton
+            buttonSize="large"
+            buttonType="solid"
+            languageKey="screen_button_list.insert_data"
+            onPress={handleInsert}
+            containerStyle={styles.button}
+          />
+          <CustomButton
+            buttonSize="large"
+            buttonType="solid"
+            languageKey="screen_button_list.list_a"
+            onPress={handleNavigateToCryptoList}
+            containerStyle={styles.button}
+          />
+          <CustomButton
+            buttonSize="large"
+            buttonType="solid"
+            languageKey="screen_button_list.list_b"
+            onPress={handleNavigateToFiatList}
+            containerStyle={styles.button}
+          />
+          <CustomButton
+            buttonSize="large"
+            buttonType="solid"
+            languageKey="screen_button_list.list_all"
+            onPress={handleNavigateToShowAll}
+            containerStyle={styles.button}
+          />
+        </View>
+        <CustomAlert
+          isVisible={isAlertVisible}
+          title={alertTitle}
+          content={alertContent}
+          onClose={closeAlert}
+        />
       </View>
     </SafeScreen>
   );
 }
 
 const styles = {
-  buttonStyle: {
+  button: {
     width: 300,
-    marginBottom: 10,
+    marginBottom: 16,
   },
 };
 

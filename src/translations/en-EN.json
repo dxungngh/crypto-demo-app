@@ -5,10 +5,24 @@
       "initials": "RNB"
     },
     "common_error": "Oops! Something went wrong.",
-    "screen_example": {
-      "hello_user": "Hi, my name is {{name}}",
-      "title": "Welcome on The $t(common_appName.full)",
-      "description": "Do you want to discover some features? Just click on one of the three buttons at the bottom of the screen. The first allows you to call a REST API. The second lets you change the theme color. And the third allows you to change the language."
+    "screen_button_list": {
+      "language": "中国人",
+      "clear_data": "Clear the data",
+      "insert_data": "Insert the data",
+      "list_a": "Currency List A - Crypto",
+      "list_b": "Currency List B - Fiat",
+      "list_all": "Currency List A + B",
+      "clearing": "Clearing...",
+      "success_clear": "✔ Data cleared successfully",
+      "error_clear": "❌ Failed to clear data",
+      "success_title": "Success",
+      "success_insert": "✔ Data inserted successfully"
+    },
+    "screen_currency_list": {
+      "search_all": "Search all",
+      "search_crypto": "Search crypto",
+      "search_fiat": "Search fiat",
+      "no_data": "No results. Please try again."
     },
     "error_boundary": {
       "title": "Oops! Something went wrong.",
