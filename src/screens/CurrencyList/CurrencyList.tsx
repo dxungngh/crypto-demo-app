@@ -3,7 +3,7 @@ import { useTheme } from '@/theme';
 import type { RootScreenProps } from '@/navigation/types';
 import { Paths } from '@/navigation/paths';
 import { SafeScreen } from '@/components/templates';
-import { useCurrencyList } from '@/hooks/currencyList';
+import { useCurrencyList } from '@/hooks/screens/currencyList';
 import HeaderView from './components/HeaderView';
 import CustomColors from '@/components/foundations/CustomColors';
 import NoDataView from './components/NoDataView';

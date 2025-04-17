@@ -1,132 +1,123 @@
 # 💰 Crypto Demo App
 
-A **React Native** demo app for managing and displaying **cryptocurrency** and **fiat currency** lists.  
-Built with a focus on performance, modularity, and scalability.
+A modern and modular React Native application for managing and displaying cryptocurrency and fiat currency lists.
+
+## 🚀 Technologies & Architecture
+
+### 🧱 Boilerplate
+
+This project is built on a custom boilerplate inspired by [react-native-boilerplate](https://github.com/thecodingmachine/react-native-boilerplate), including:
+
+- React Native with TypeScript
+- React Navigation
+- React Query (TanStack Query)
+- MMKV for local storage
+- Custom Hooks for screen-specific logic
+- Custom UI Components (e.g., `CustomText`, `CustomInput`, `CustomButton`, ...)
+
+### 🌿 Git Flow
+
+This project follows the Git Flow branching model:
+
+- `develop`: main development branch
+- `feature/*`: for new features
+- `release/*`: pre-release staging
+- `main`: stable production branch
+
+### ⚡ React Query
+
+React Query is used for server state management:
+
+- Caching and refetching out of the box
+- Easy loading and error states
+- Support for pagination, polling, and optimistic updates
+- Reduces boilerplate for API interactions
+
+### 🧩 Screen-specific Hooks Architecture
+
+Each screen encapsulates its business logic using a dedicated custom hook:
+
+- Encourages separation of concerns
+- Easy to test and reuse
+- Enhances readability and scalability
+
+Example hooks: `useCurrencyList`, `useCurrencyInfo`, `useButtonList`
+
+### 🎨 Custom Components
+
+Reusable UI components ensure design consistency:
+
+- `CustomText` wraps native `Text` with standardized styling
+- `CustomInput` for styled input fields
+- `CustomButton` with unified style and behavior
+
+### 🧪 Unit Testing
+
+Comprehensive test coverage:
+
+- All screens tested
+- All reusable components tested
+- Business logic (hooks and services) tested
+
+Frameworks used:
+
+- `@testing-library/react-native`
+- `jest`
+
+### 🗄️ MMKV vs. SQLite
+
+This app uses `react-native-mmkv` for local storage:
+
+| Feature         | MMKV                      | SQLite                       |
+|----------------|---------------------------|------------------------------|
+| Performance     | 🔥 Very fast               | 🐢 Slower for key-value data |
+| Data structure  | Key-value store           | Relational database          |
+| Encryption      | Supported                 | Supported                    |
+| Use case        | Simple local storage      | Complex relational queries   |
+
+MMKV is chosen for its superior speed and simplicity in key-value storage scenarios.
 
 ---
 
-## 🚀 Key Features
+## 🧪 Installation
 
-- Display **Top 100 Crypto** tokens and fiat currencies
-- Search by name or symbol
-- **Multi-language support** (English & Chinese)
-- Local storage using **MMKV** – much faster than SQLite
-- Git workflow follows [A successful Git branching model](https://nvie.com/posts/a-successful-git-branching-model/)
-- Custom UI components like `CustomText`, `CustomButton`, `CustomInput`, ...
-- Comprehensive **unit test coverage** with CI/CD blocking merges to `develop` or `master` if tests fail
-
----
-
-## 🔀 Git Workflow
-
-This project uses the GitFlow strategy:
-
-```text
-main       ← Production branch
-develop    ← Integration branch
-feature/*  ← New feature development
-hotfix/*   ← Urgent production fixes
-release/*  ← Pre-release preparations
+```bash
+git clone https://github.com/dxungngh/crypto-demo-app.git
+cd crypto-demo-app
+yarn install
+npx pod-install
+yarn ios # or yarn android
 ```
 
-✅ All **pull requests must pass unit tests** before merging into `develop` or `master`.
+Ensure React Native development environment is already set up.
 
 ---
 
 ## 📁 Folder Structure
 
 ```
-crypto-demo-app/
-├── src/
-│   ├── assets/                # Static JSON data (cryptoList, fiatList, top100)
-│   ├── components/            # Reusable UI components
-│   │   ├── foundations/       # CustomText, CustomButton, CustomAlert, etc.
-│   │   └── templates/         # Page templates (e.g., SafeScreen)
-│   ├── constants/             # Enums, config values, etc.
-│   ├── hooks/                 # Custom React hooks
-│   │   ├── buttonList/
-│   │   ├── currencyList/
-│   │   ├── domain/            # Business logic (MMKV storage)
-│   │   ├── language/          # i18n utilities
-│   │   └── common/            # Shared hooks (e.g., useDebounce)
-│   ├── i18n/                  # Localization configuration
-│   ├── navigation/            # Navigation setup and type declarations
-│   ├── screens/               # App screens (ButtonList, CurrencyList)
-│   ├── theme/                 # ThemeContext, variants, layout helpers
-│   └── utils/                 # Utility functions (if any)
-├── __mocks__/                 # Jest mocks (e.g., MMKV, i18n)
-├── .github/workflows/         # GitHub Actions
-│   └── test.yml               # CI workflow for running unit tests
-├── jest.setup.js              # Jest global config
-├── babel.config.js            # Babel alias config
-└── tsconfig.json              # TypeScript settings
+src/
+├── assets/                    # Static data files, images, icons
+│   └── data/                  # Predefined currency lists
+├── components/
+│   ├── atoms/                 # Reusable atomic components (e.g., Skeleton, Icon)
+│   ├── foundations/           # Styled base components (Text, Button, Input, Colors)
+│   └── templates/             # Screen layout wrappers like SafeScreen
+├── hooks/
+│   ├── common/                # Shared utility hooks (e.g., debounce)
+│   ├── domain/                # Business logic hooks and services
+│   └── screens/               # Logic hooks for each screen (e.g., useButtonList)
+├── navigation/                # Navigation setup and type definitions
+├── screens/                   # All app screens
+│   └── CurrencyList/          # UI and components related to currency list screen
+│   └── ButtonList/            # Button list screen and related views
+├── theme/                     # Theme setup and hook
+├── utils/                     # Helper functions and utilities
+└── App.tsx                    # Application entry point
 ```
 
 ---
 
-## 🧪 Unit Testing
+## ✅ Summary
 
-All core logic, hooks, and components are covered by tests using:
-
-- `Jest`
-- `@testing-library/react-native`
-- `@testing-library/react-hooks`
-
-```bash
-# Run all unit tests
-yarn test
-
-# With coverage reports
-yarn test:report
-```
-
-🚫 **Pull requests are blocked** if tests fail – enforced by GitHub Actions.
-
----
-
-## 💾 Storage: MMKV
-
-This app uses [`react-native-mmkv`](https://github.com/mrousavy/react-native-mmkv), a super fast key-value storage for React Native powered by C++.
-
-|     | MMKV            | SQLite          |
-|-----|------------------|------------------|
-| Speed | ⚡ Super fast     | 🐢 Slower         |
-| API  | JSON-friendly     | SQL-based         |
-| Use  | Config, cache     | Complex data       |
-
----
-
-## ⚙️ Tech Stack
-
-- **React Native** `0.78.x`
-- **TypeScript**
-- **React Navigation**
-- **React Query**
-- **MMKV** for local storage
-- **Jest** + **Testing Library** for unit testing
-- **i18next** for multi-language support
-- **Tailwind-style layout** via custom `layout` object
-
----
-
-## 🛠 Getting Started
-
-```bash
-# Install dependencies
-yarn install
-
-# For iOS:
-cd ios && pod install && cd ..
-```
-
----
-
-## 📜 License
-
-MIT License – free for personal or commercial use.
-
----
-
-## ✨ Author
-
-Built by [@dxungngh](https://github.com/dxungngh) with ❤️ and TypeScript
+This project uses a clean architecture with modular design, test coverage, and performance in mind. React Query and MMKV make data handling efficient, while the use of custom hooks and components ensures consistency and maintainability.
