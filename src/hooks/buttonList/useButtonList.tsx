@@ -22,8 +22,6 @@ export const useButtonList = (navigation: NavigationProp<RootStackParamList>) =>
     const [alertContent, setAlertContent] = useState('');
 
     useEffect(() => {
-        console.log('clearStatus', clearStatus);
-        console.log('saveStatus', saveStatus);
         if (saveStatus === 'success') {
             setAlertTitle(t('screen_button_list.success_title'));
             setAlertContent(t('screen_button_list.success_insert'));
