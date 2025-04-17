@@ -12,7 +12,9 @@ const Avatar = ({ symbol, size = 40 }: AvatarProps) => {
     const firstLetter = symbol.charAt(0).toUpperCase();
 
     return (
-        <View style={[styles.circle, { width: size, height: size, borderRadius: size / 2, marginRight: 16 }]}>
+        <View
+            testID="avatar-view"
+            style={[styles.circle, { width: size, height: size, borderRadius: size / 2, marginRight: 16 }]}>
             <CustomTextHeadingSmall style={styles.text}>{firstLetter}</CustomTextHeadingSmall>
         </View>
     );
