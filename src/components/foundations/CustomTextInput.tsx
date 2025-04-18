@@ -180,6 +180,7 @@ export default function CustomTextInput({
               ? t(placeholderLanguageKey)
               : props.placeholder
           }
+          placeholderTextColor={CustomColors.gray_60}
           editable={editable}
           onFocus={onTextFocus}
           onBlur={onTextBlur}
