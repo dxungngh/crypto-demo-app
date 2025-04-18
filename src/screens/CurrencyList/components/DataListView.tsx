@@ -10,6 +10,7 @@ interface DataListProps {
 
 const DataListView = ({ dataList }: DataListProps) => {
     const { layout } = useTheme();
+    // const ITEM_HEIGHT = 60;
 
     const renderItem = ({ item }: { item: CurrencyInfo }) => {
         return (
@@ -29,6 +30,14 @@ const DataListView = ({ dataList }: DataListProps) => {
                 keyExtractor={(item) => item.id}
                 renderItem={renderItem}
                 contentContainerStyle={{ paddingBottom: 20 }}
+
+            // 🚀 PERFORMANCE OPTIMIZATION BELOW:
+            // Avoid runtime measuring by providing fixed height & offset
+            // getItemLayout={(_, index) => ({
+            //     length: ITEM_HEIGHT,
+            //     offset: ITEM_HEIGHT * index,
+            //     index,
+            // })}
             />
         </View>
     );
