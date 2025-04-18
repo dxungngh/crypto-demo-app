@@ -17,16 +17,6 @@ export const useCurrencyInfo = () => {
     });
 
   /**
-   * Fetch currencies matching a search query.
-   */
-  const searchCurrencyList = (inputText: string, type: CurrencyType) =>
-    useQuery<CurrencyInfo[]>({
-      queryKey: [...currencyListQueryKey, 'search', type, inputText],
-      queryFn: () => Promise.resolve(CurrencyInfoService.search(inputText, type)),
-      enabled: inputText.length > 0,
-    });
-
-  /**
    * Save a full list of currencies to storage.
    */
   const saveMutation = useMutation({
@@ -65,7 +55,6 @@ export const useCurrencyInfo = () => {
 
   return {
     fetchCurrencyList,
-    searchCurrencyList,
 
     saveAllData,
     saveStatus: saveMutation.status,
