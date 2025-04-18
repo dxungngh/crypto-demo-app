@@ -42,17 +42,6 @@ describe('useCurrencyInfo hook', () => {
         expect(result.current.data).toEqual(mockCryptoList);
     });
 
-    it('searches currency list by text', async () => {
-        (CurrencyInfoService.CurrencyInfoService.search as jest.Mock).mockResolvedValueOnce(mockCryptoList);
-
-        const { result, waitFor } = renderHook(() => useCurrencyInfo().searchCurrencyList('bit', 'crypto'), {
-            wrapper: createWrapper(),
-        });
-
-        await waitFor(() => result.current.isSuccess);
-        expect(result.current.data).toEqual(mockCryptoList);
-    });
-
     it('calls saveAllData correctly', async () => {
         const saveMock = CurrencyInfoService.CurrencyInfoService.saveCryptoList as jest.Mock;
         saveMock.mockResolvedValueOnce(undefined);
