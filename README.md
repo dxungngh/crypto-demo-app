@@ -22,7 +22,7 @@ This project follows the Git Flow branching model:
 - `develop`: main development branch
 - `feature/*`: for new features
 - `release/*`: pre-release staging
-- `main`: stable production branch
+- `master`: stable production branch
 
 ### ⚡ React Query
 
@@ -50,6 +50,8 @@ Reusable UI components ensure design consistency:
 - `CustomText` wraps native `Text` with standardized styling
 - `CustomInput` for styled input fields
 - `CustomButton` with unified style and behavior
+- `CustomAlert`
+- `CustomLoading`
 
 ### 🧪 Unit Testing
 
