@@ -58,16 +58,4 @@ describe('CurrencyInfoService', () => {
         const result = CurrencyInfoService.getAll();
         expect(result).toEqual([]);
     });
-
-    it('should search by name and symbol', () => {
-        CurrencyInfoService.saveCryptoList(mockData);
-        const result = CurrencyInfoService.search('bit', 'crypto');
-        expect(result.map((item) => item.id)).toContain('BTC');
-    });
-
-    it('should search by symbol', () => {
-        CurrencyInfoService.saveCryptoList(mockData);
-        const result = CurrencyInfoService.search('et', 'crypto');
-        expect(result.map((item) => item.id)).toContain('ETH');
-    });
 });

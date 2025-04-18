@@ -4,3 +4,5 @@ export const CURRENCY_TYPE = {
 } as const;
 
 export type CurrencyType = typeof CURRENCY_TYPE[keyof typeof CURRENCY_TYPE];
+
+export const CURRENCY_LIST_STORAGE_KEY = 'currencyList';
