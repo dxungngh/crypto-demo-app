@@ -24,6 +24,11 @@ This project follows the Git Flow branching model:
 - `release/*`: pre-release staging
 - `master`: stable production branch
 
+✅ CI Integration for Testing
+
+To ensure code quality and stability:
+- I’ve configured GitHub Actions to automatically run unit tests before allowing pull requests to be merged into develop or master.
+
 ### ⚡ React Query
 
 React Query is used for server state management:
