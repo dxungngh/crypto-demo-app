@@ -238,7 +238,6 @@ const Styles = StyleSheet.create({
   text_input: {
     padding: 0,
     flex: 1,
-    lineHeight: 0,
     paddingTop: 12,
     marginLeft: 16,
     paddingBottom: 12,

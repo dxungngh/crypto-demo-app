@@ -1,6 +1,5 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { FullWindowOverlay } from 'react-native-screens';
+import { View, StyleSheet, Modal } from 'react-native';
 import { CustomTextBodyLarge, CustomTextHeadingMedium, CustomTextLabelLarge } from './CustomText';
 import CustomColors from './CustomColors';
 import CustomButton from './CustomButton';
@@ -76,7 +75,10 @@ const CustomAlert = forwardRef(
 
         if (!isVisibleState) return null;
         return (
-            <FullWindowOverlay>
+            <Modal
+                visible={isVisibleState}
+                transparent
+                animationType="fade">
                 <View style={Styles.modalContainer}>
                     <View style={Styles.dialogContainer}>
                         {customView}
@@ -104,7 +106,7 @@ const CustomAlert = forwardRef(
                         />
                     </View>
                 </View>
-            </FullWindowOverlay>
+            </Modal>
         );
     }
 );
